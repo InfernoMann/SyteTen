@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon UI Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(45deg, #1a0033, #330066);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 100px;
+        }
+        .neon-text {
+            font-family: 'Arial', sans-serif;
+            font-size: 4em;
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ff00, 0 0 40px #00ff00;
+            animation: flicker 1.5s infinite alternate;
+        }
+        .neon-button {
+            font-size: 2em;
+            padding: 15px 30px;
+            border: 3px solid #00ffff;
+            border-radius: 10px;
+            background: none;
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ff00;
+            cursor: pointer;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        .neon-button:hover {
+            background: #00ffff;
+            color: #1a0033;
+            text-shadow: none;
+        }
+        .floating-square {
+            position: absolute;
+            border: 3px solid #00ffff;
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px #00ffff, 0 0 40px #00ff00, inset 5px 5px 10px rgba(0, 255, 255, 0.5), inset -5px -5px 10px rgba(0, 255, 0, 0.5);
+            animation: float 15s infinite;
+        }
+        .button-square {
+            font-size: 1em;
+            padding: 10px 20px;
+            border: 3px solid #00ffff;
+            border-radius: 10px;
+            background: none;
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ff00;
+            cursor: pointer;
+            animation: glow 1.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px #00ffff, 0 0 40px #00ff00, inset 5px 5px 10px rgba(0, 255, 255, 0.5), inset -5px -5px 10px rgba(0, 255, 0, 0.5);
+        }
+        @keyframes float1 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(200px, 200px) rotate(90deg); }
+            50% { transform: translate(-200px, 0) rotate(180deg); }
+            75% { transform: translate(200px, -200px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        @keyframes float2 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-300px, 150px) rotate(120deg); }
+            50% { transform: translate(300px, -150px) rotate(240deg); }
+            75% { transform: translate(-150px, 300px) rotate(360deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        @keyframes float3 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(250px, -250px) rotate(90deg); }
+            50% { transform: translate(-250px, 250px) rotate(180deg); }
+            75% { transform: translate(150px, 150px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 15px #00ffff; }
+            to { box-shadow: 0 0 30px #00ff00, 0 0 50px #00ff00; }
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="neon-text">Delta executor</div>
+    <div class="neon-text" style="margin-top: 50px;">All in your hands</div>
+    <button class="neon-button">Start now</button>
+    <div class="floating-square" style="width: 50px; height: 50px; top: 10%; left: 10%; animation: float1 15s infinite;"></div>
+    <div class="floating-square" style="width: 70px; height: 70px; top: 20%; left: 70%; animation: float2 15s infinite;"></div>
+    <div class="button-square" style="top: 50%; left: 20%; animation: float3 15s infinite;">Start</div>
+    <div class="floating-square" style="width: 80px; height: 80px; top: 70%; left: 60%; animation: float1 15s infinite;"></div>
+    <div class="floating-square" style="width: 40px; height: 40px; top: 30%; left: 40%; animation: float2 15s infinite;"></div>
+    <div class="floating-square" style="width: 65px; height: 65px; top: 15%; left: 30%; animation: float3 15s infinite;"></div>
+    <div class="floating-square" style="width: 55px; height: 55px; top: 45%; left: 75%; animation: float1 15s infinite;"></div>
+    <div class="button-square" style="top: 65%; left: 15%; animation: float2 15s infinite;">Go</div>
+    <div class="floating-square" style="width: 45px; height: 45px; top: 25%; left: 85%; animation: float3 15s infinite;"></div>
+    <div class="floating-square" style="width: 60px; height: 60px; top: 35%; left: 50%; animation: float1 15s infinite;"></div>
+    <div class="floating-square" style="width: 50px; height: 50px; top: 5%; left: 25%; animation: float2 15s infinite;"></div>
+    <div class="floating-square" style="width: 70px; height: 70px; top: 25%; left: 15%; animation: float3 15s infinite;"></div>
+    <div class="floating-square" style="width: 60px; height: 60px; top: 55%; left: 65%; animation: float1 15s infinite;"></div>
+    <div class="button-square" style="top: 75%; left: 45%; animation: float2 15s infinite;">Now</div>
+    <div class="floating-square" style="width: 40px; height: 40px; top: 10%; left: 60%; animation: float3 15s infinite;"></div>
+    <div class="floating-square" style="width: 65px; height: 65px; top: 30%; left: 80%; animation: float1 15s infinite;"></div>
+    <div class="floating-square" style="width: 55px; height: 55px; top: 40%; left: 10%; animation: float2 15s infinite;"></div>
+    <div class="floating-square" style="width: 75px; height: 75px; top: 60%; left: 30%; animation: float3 15s infinite;"></div>
+    <div class="floating-square" style="width: 45px; height: 45px; top: 20%; left: 90%; animation: float1 15s infinite;"></div>
+    <div class="floating-square" style="width: 60px; height: 60px; top: 70%; left: 70%; animation: float2 15s infinite;"></div>
+</body>
+</html>
