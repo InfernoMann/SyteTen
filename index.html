@@ -2,99 +2,108 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Cyberpunk Neon Demo</title>
+  <title>Cyberpunk Neon Decor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <!-- Import Google Fonts for cyberpunk feel -->
+  <!-- Шрифты для киберпанка -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Russo+One&display=swap" rel="stylesheet" />
   
-  <!-- Three.js Library -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  
-  <!-- Particles.js Library -->
+  <!-- Particles.js библиотека -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   
   <style>
-    /* Basic Reset */
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
-
-    body, html {
+    html, body {
       height: 100%;
       overflow: hidden;
-      background: radial-gradient(circle at center, #0a0a13 0%, #000000 80%);
       font-family: 'Orbitron', 'Russo One', sans-serif;
+      background: linear-gradient(-45deg, #0a0a13, #050615, #041723, #0a0a13);
+      background-size: 600% 600%;
+      animation: gradientShift 40s ease infinite;
       color: #00ffff;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       user-select: none;
+      position: relative;
     }
 
-    /* Container */
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Контейнер */
     .container {
       position: relative;
       z-index: 10;
-      text-align: center;
       max-width: 960px;
-      padding: 20px;
+      text-align: center;
+      padding: 30px 40px;
+      background: rgba(0, 20, 40, 0.45);
+      border-radius: 15px;
+      box-shadow:
+        0 0 20px #00ffffaa,
+        0 0 40px #ff0080aa,
+        0 0 80px #00ffff66;
+      backdrop-filter: blur(12px);
+      border: 1px solid #00ffff44;
     }
 
-    /* Neon Text */
+    /* Неоновый текст с анимацией */
     h1 {
-      font-size: 4em;
+      font-size: 4rem;
       color: #00ffff;
       text-transform: uppercase;
+      letter-spacing: 0.15em;
       text-shadow:
-        0 0 5px #00ffff,
-        0 0 10px #00ffff,
-        0 0 20px #00ffff,
-        0 0 40px #0ff,
-        0 0 80px #0ff;
-      animation: flicker 3s infinite alternate;
-      letter-spacing: 0.12em;
-      margin-bottom: 1rem;
+        0 0 5px #00ffff, 
+        0 0 15px #0ff, 
+        0 0 35px #0ff, 
+        0 0 60px #0ff, 
+        0 0 90px #08f, 
+        0 0 100px #0ff;
+      animation: flicker 3.5s infinite alternate;
+      user-select: none;
     }
 
-    /* Flicker animation */
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        text-shadow:
-          0 0 5px #00ffff,
-          0 0 10px #00ffff,
-          0 0 20px #00ffff,
-          0 0 40px #0ff,
-          0 0 80px #0ff;
-        opacity: 1;
-      }
-      20%, 22%, 24%, 55% {
-        text-shadow: none;
-        opacity: 0.8;
-      }
+    /* Параграф под заголовком */
+    p.subtitle {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+      color: #ffffffcc;
+      text-shadow:
+        0 0 8px #ff0080aa;
+      letter-spacing: 0.05em;
     }
 
-    /* Neon Button */
+    /* Кнопка с улучшенным неоном и анимацией */
     .neon-button {
+      margin-top: 3rem;
       font-family: 'Russo One', sans-serif;
-      font-size: 1.5em;
-      padding: 1rem 3rem;
+      font-size: 1.6rem;
+      padding: 1.3rem 3.5rem;
       color: #ff0080;
-      text-transform: uppercase;
-      border: 2px solid #ff0080;
-      border-radius: 10px;
       background: transparent;
+      border: 2px solid #ff0080;
+      border-radius: 12px;
       cursor: pointer;
       box-shadow:
-        0 0 5px #ff0080,
-        0 0 10px #ff0080,
+        0 0 8px #ff0080,
         0 0 20px #ff0080,
-        0 0 40px #ff00cc;
-      transition: all 0.3s ease-in-out;
-      margin-top: 2rem;
+        0 0 30px #ff00cc,
+        inset 0 0 10px #ff0080;
+      transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
       user-select: none;
     }
 
@@ -102,188 +111,233 @@
       color: #00ffff;
       border-color: #00ffff;
       box-shadow:
-        0 0 10px #00ffff,
-        0 0 30px #00ffff,
+        0 0 20px #00ffff,
         0 0 40px #00ffff,
-        0 0 60px #0ff;
+        0 0 50px #0ff,
+        inset 0 0 20px #00ffff;
       transform: scale(1.1);
     }
 
-    /* Particle Container */
-    #particles-js {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 1;
-      background: transparent;
+    /* Анимация мерцания неона у текста */
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 5px #00ffff, 
+          0 0 15px #0ff, 
+          0 0 35px #0ff, 
+          0 0 60px #0ff, 
+          0 0 90px #08f, 
+          0 0 100px #0ff;
+      }
+      20%, 24%, 55% {
+        opacity: 0.8;
+        text-shadow: none;
+      }
     }
 
-    /* Three.js Canvas */
-    #three-canvas {
+    /* Панели голографические */
+    .holo-panel {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
+      border: 1.5px solid #00ffff44;
+      border-radius: 12px;
+      background: rgba(0, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0 0 20px #00ffff55,
+        inset 0 0 10px #00ffffaa;
+      pointer-events: none;
+      z-index: 5;
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+    }
+
+    .holo-panel.top-left {
+      top: 40px;
+      left: 40px;
+      width: 280px;
+      height: 140px;
+      transform: rotate(-6deg);
+    }
+
+    .holo-panel.bottom-right {
+      bottom: 50px;
+      right: 80px;
+      width: 320px;
+      height: 170px;
+      transform: rotate(8deg);
+    }
+
+    .holo-panel.center {
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 220px;
+      transform: translate(-50%, -50%) rotate(3deg);
+      opacity: 0.15;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow:
+          0 0 20px #00ffff55,
+          inset 0 0 10px #00ffffaa;
+        opacity: 0.95;
+      }
+      100% {
+        box-shadow:
+          0 0 30px #00ffffaa,
+          inset 0 0 15px #00ffffff;
+        opacity: 0.7;
+      }
+    }
+
+    /* Анимированные неоновые линии (для динамичного декора) */
+    .lines-container {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: 2;
-      pointer-events: none; /* Let clicks pass through */
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .neon-line {
+      position: absolute;
+      border-radius: 2px;
+      box-shadow:
+        0 0 5px #0ff,
+        0 0 15px #0ff,
+        0 0 30px #00ffffcc;
+      opacity: 0.6;
+      animation-timing-function: linear;
     }
 
   </style>
 </head>
 <body>
-  
-  <!-- Particle.js container -->
+
+  <!-- Эффект частиц -->
   <div id="particles-js"></div>
 
-  <!-- Three.js WebGL Canvas -->
-  <canvas id="three-canvas"></canvas>
+  <!-- Голографические панели -->
+  <div class="holo-panel top-left"></div>
+  <div class="holo-panel bottom-right"></div>
+  <div class="holo-panel center"></div>
 
-  <div class="container">
+  <!-- Анимированные линии -->
+  <div class="lines-container" id="linesContainer"></div>
+
+  <div class="container" role="main" aria-label="Главный контент сайта с названием и кнопкой">
     <h1>АЛОЕ ВЕРА ШАМПУНЬ</h1>
-    <p style="font-size:1.25rem; color:#ffffffaa; margin-bottom: 3rem;">Сила природы в каждом флаконе</p>
-    <button class="neon-button" onclick="alert('Покупка оформлена! Спасибо!')">Купить Сейчас</button>
+    <p class="subtitle">Сила природы в каждом флаконе</p>
+    <button class="neon-button" onclick="alert('Спасибо за покупку!')">Купить Сейчас</button>
   </div>
 
-
-  <!-- Initialization Scripts -->
+  <!-- Скрипт инициализации -->
   <script>
-    //////////////////////
-    // Initialize particles.js
-    //////////////////////
+    // ////////////////////
+    // Частицы particles.js - значительно увеличены и разноцветные
+    // ////////////////////
     particlesJS('particles-js', {
       particles: {
-        number: { value: 120, density: { enable: true, value_area: 800 }},
-        color: { value: ["#00ffff", "#ff0080", "#ffffff"] },
+        number: { value: 180, density: { enable: true, value_area: 700 } },
+        color: { value: ["#00ffff", "#ff0080", "#ffffff", "#ff00cc", "#00ffea"] },
         shape: { type: "circle" },
-        opacity: { value: 0.6, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
-        size: { value: 3, random: true },
+        opacity: { 
+          value: 0.7,
+          random: true,
+          anim: { enable: true, speed: 1.5, opacity_min: 0.1, sync: false }
+        },
+        size: { 
+          value: 4,
+          random: true,
+          anim: { enable: true, speed: 5, size_min: 1, sync: false }
+        },
         move: {
-          enable: true,
-          speed: 1.5,
+          enable: true, speed: 2,
           direction: "none",
           random: true,
           straight: false,
           out_mode: "bounce",
           bounce: true,
+          attract: { enable: false }
+        },
+        line_linked: {
+          enable: true,
+          distance: 160,
+          color: "#00ffff",
+          opacity: 0.3,
+          width: 1.2
         }
       },
       interactivity: {
+        detect_on: "canvas",
         events: {
           onhover: { enable: true, mode: "grab" },
           onclick: { enable: true, mode: "push" },
+          resize: true
         },
         modes: {
-          grab: { distance: 150, line_linked: { opacity: 0.2 }},
-          push: { particles_nb: 4 }
+          grab: { distance: 190, line_linked: { opacity: 0.4 } },
+          push: { particles_nb: 6 },
         }
       },
       retina_detect: true
     });
 
-    //////////////////////
-    // Initialize Three.js - 3 magical floating spheres
-    //////////////////////
+    // ////////////////////
+    // Анимированные неоновые линии для декора
+    // ////////////////////
+    const linesContainer = document.getElementById('linesContainer');
+    const colors = ['#00ffff', '#ff0080', '#ffffff', '#ff00cc', '#00ffea'];
 
-    const canvas = document.getElementById("three-canvas");
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);  // Transparent background
+    function createLine() {
+      const line = document.createElement('div');
+      line.classList.add('neon-line');
 
-    camera.position.set(0, 0, 20);
+      // Случайный цвет из палитры
+      line.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-    // Lights to create glowing effect
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
-    scene.add(ambientLight);
+      // Случайная начальная позиция и размер
+      const width = Math.random() * 200 + 50 + 'px';
+      const height = (Math.random() < 0.5) ? '2px' : '150px';
+      line.style.width = width;
+      line.style.height = height;
 
-    const pointLight1 = new THREE.PointLight(0x00ffff, 1, 100);
-    pointLight1.position.set(10, 10, 10);
-    scene.add(pointLight1);
+      // Случайное положение на экране
+      line.style.top = Math.random() * 100 + 'vh';
+      line.style.left = Math.random() * 100 + 'vw';
 
-    const pointLight2 = new THREE.PointLight(0xff0000, 1, 100);
-    pointLight2.position.set(-10, -10, 10);
-    scene.add(pointLight2);
+      // Случайная скорость и направление для анимации движения
+      const duration = Math.random() * 12 + 8; // сек
 
-    const pointLight3 = new THREE.PointLight(0xffffff, 1, 100);
-    pointLight3.position.set(0, 10, 20);
-    scene.add(pointLight3);
+      // Анимация - движение линии по горизонтали или вертикали циклически
+      const animName = height === '2px' ? 'moveHorizontal' : 'moveVertical';
 
-    // Sphere parameters
-    const sphereGeometry = new THREE.SphereGeometry(2.2, 64, 64);
+      line.style.animation = `${animName} ${duration}s linear infinite alternate`;
 
-    // Materials with neon glow effect using Emissive colors and custom shaders is complex
-    // Here we use MeshBasicMaterial with emissive color and post-processing glow illusion
-    const materialRed = new THREE.MeshStandardMaterial({
-      color: 0xff0040,
-      emissive: 0xff1a4d,
-      roughness: 0.3,
-      metalness: 0.6,
-      transparent: true,
-      opacity: 0.85,
-      side: THREE.DoubleSide,
-    });
-
-    const materialWhite = new THREE.MeshStandardMaterial({
-      color: 0xf0f0f0,
-      emissive: 0xffffff,
-      roughness: 0.3,
-      metalness: 0.8,
-      transparent: true,
-      opacity: 0.8,
-      side: THREE.DoubleSide,
-    });
-
-    const materialBlue = new THREE.MeshStandardMaterial({
-      color: 0x00ffff,
-      emissive: 0x33ffff,
-      roughness: 0.3,
-      metalness: 0.6,
-      transparent: true,
-      opacity: 0.9,
-      side: THREE.DoubleSide,
-    });
-
-    // Create spheres
-    const sphereRed = new THREE.Mesh(sphereGeometry, materialRed);
-    const sphereWhite = new THREE.Mesh(sphereGeometry, materialWhite);
-    const sphereBlue = new THREE.Mesh(sphereGeometry, materialBlue);
-
-    sphereRed.position.set(-6, 0, 0);
-    sphereWhite.position.set(0, 0, 0);
-    sphereBlue.position.set(6, 0, 0);
-
-    scene.add(sphereRed, sphereWhite, sphereBlue);
-
-    // Animation parameters
-    let clock = new THREE.Clock();
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      let time = clock.getElapsedTime();
-
-      // Floating / bobbing effect
-      sphereRed.position.y = Math.sin(time * 1.2) * 1.2;
-      sphereWhite.position.y = Math.cos(time * 1.3) * 1.3;
-      sphereBlue.position.y = Math.sin(time * 1.1 + Math.PI/2) * 1.1;
-
-      // Slow rotation for magic effect
-      sphereRed.rotation.y += 0.008;
-      sphereWhite.rotation.y -= 0.0075;
-      sphereBlue.rotation.y += 0.009;
-
-      renderer.render(scene, camera);
+      linesContainer.appendChild(line);
     }
-    animate();
 
-    // Responsive resize
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth/window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    // Создаём много линий
+    for(let i=0; i<30; i++) {
+      createLine();
+    }
 
   </script>
+
+  <style>
+    /* Анимации для линий */
+    @keyframes moveHorizontal {
+      0% { transform: translateX(0); opacity: 0.6;}
+      50% {opacity: 1;}
+      100% { transform: translateX(40px); opacity: 0.6;}
+    }
+    @keyframes moveVertical {
+      0% { transform: translateY(0); opacity: 0.5;}
+      50% {opacity: 1;}
+      100% { transform: translateY(30px); opacity: 0.5;}
+    }
+  </style>
 
 </body>
 </html>
