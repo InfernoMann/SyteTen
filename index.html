@@ -1,119 +1,289 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon UI Page</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: linear-gradient(45deg, #1a0033, #330066);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 100px;
-        }
-        .neon-text {
-            font-family: 'Arial', sans-serif;
-            font-size: 4em;
-            color: #00ffff;
-            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ff00, 0 0 40px #00ff00;
-            animation: flicker 1.5s infinite alternate;
-        }
-        .neon-button {
-            font-size: 2em;
-            padding: 15px 30px;
-            border: 3px solid #00ffff;
-            border-radius: 10px;
-            background: none;
-            color: #00ffff;
-            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ff00;
-            cursor: pointer;
-            animation: glow 1.5s ease-in-out infinite alternate;
-        }
-        .neon-button:hover {
-            background: #00ffff;
-            color: #1a0033;
-            text-shadow: none;
-        }
-        .floating-square {
-            position: absolute;
-            border: 3px solid #00ffff;
-            background: rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 20px #00ffff, 0 0 40px #00ff00, inset 5px 5px 10px rgba(0, 255, 255, 0.5), inset -5px -5px 10px rgba(0, 255, 0, 0.5);
-            animation: float 15s infinite;
-        }
-        .button-square {
-            font-size: 1em;
-            padding: 10px 20px;
-            border: 3px solid #00ffff;
-            border-radius: 10px;
-            background: none;
-            color: #00ffff;
-            text-shadow: 0 0 15px #00ffff, 0 0 30px #00ff00;
-            cursor: pointer;
-            animation: glow 1.5s ease-in-out infinite alternate;
-            box-shadow: 0 0 20px #00ffff, 0 0 40px #00ff00, inset 5px 5px 10px rgba(0, 255, 255, 0.5), inset -5px -5px 10px rgba(0, 255, 0, 0.5);
-        }
-        @keyframes float1 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(200px, 200px) rotate(90deg); }
-            50% { transform: translate(-200px, 0) rotate(180deg); }
-            75% { transform: translate(200px, -200px) rotate(270deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
-        }
-        @keyframes float2 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-300px, 150px) rotate(120deg); }
-            50% { transform: translate(300px, -150px) rotate(240deg); }
-            75% { transform: translate(-150px, 300px) rotate(360deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-        @keyframes float3 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(250px, -250px) rotate(90deg); }
-            50% { transform: translate(-250px, 250px) rotate(180deg); }
-            75% { transform: translate(150px, 150px) rotate(270deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
-        }
-        @keyframes glow {
-            from { box-shadow: 0 0 15px #00ffff; }
-            to { box-shadow: 0 0 30px #00ff00, 0 0 50px #00ff00; }
-        }
-        @keyframes flicker {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Cyberpunk Neon Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Import Google Fonts for cyberpunk feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Russo+One&display=swap" rel="stylesheet" />
+  
+  <!-- Three.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  
+  <!-- Particles.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #0a0a13 0%, #000000 80%);
+      font-family: 'Orbitron', 'Russo One', sans-serif;
+      color: #00ffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Container */
+    .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 960px;
+      padding: 20px;
+    }
+
+    /* Neon Text */
+    h1 {
+      font-size: 4em;
+      color: #00ffff;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #0ff,
+        0 0 80px #0ff;
+      animation: flicker 3s infinite alternate;
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+    }
+
+    /* Flicker animation */
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow:
+          0 0 5px #00ffff,
+          0 0 10px #00ffff,
+          0 0 20px #00ffff,
+          0 0 40px #0ff,
+          0 0 80px #0ff;
+        opacity: 1;
+      }
+      20%, 22%, 24%, 55% {
+        text-shadow: none;
+        opacity: 0.8;
+      }
+    }
+
+    /* Neon Button */
+    .neon-button {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.5em;
+      padding: 1rem 3rem;
+      color: #ff0080;
+      text-transform: uppercase;
+      border: 2px solid #ff0080;
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      box-shadow:
+        0 0 5px #ff0080,
+        0 0 10px #ff0080,
+        0 0 20px #ff0080,
+        0 0 40px #ff00cc;
+      transition: all 0.3s ease-in-out;
+      margin-top: 2rem;
+      user-select: none;
+    }
+
+    .neon-button:hover {
+      color: #00ffff;
+      border-color: #00ffff;
+      box-shadow:
+        0 0 10px #00ffff,
+        0 0 30px #00ffff,
+        0 0 40px #00ffff,
+        0 0 60px #0ff;
+      transform: scale(1.1);
+    }
+
+    /* Particle Container */
+    #particles-js {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1;
+      background: transparent;
+    }
+
+    /* Three.js Canvas */
+    #three-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 2;
+      pointer-events: none; /* Let clicks pass through */
+    }
+
+  </style>
 </head>
 <body>
-    <div class="neon-text">Delta executor</div>
-    <div class="neon-text" style="margin-top: 50px;">All in your hands</div>
-    <button class="neon-button">Start now</button>
-    <div class="floating-square" style="width: 50px; height: 50px; top: 10%; left: 10%; animation: float1 15s infinite;"></div>
-    <div class="floating-square" style="width: 70px; height: 70px; top: 20%; left: 70%; animation: float2 15s infinite;"></div>
-    <div class="button-square" style="top: 50%; left: 20%; animation: float3 15s infinite;">Start</div>
-    <div class="floating-square" style="width: 80px; height: 80px; top: 70%; left: 60%; animation: float1 15s infinite;"></div>
-    <div class="floating-square" style="width: 40px; height: 40px; top: 30%; left: 40%; animation: float2 15s infinite;"></div>
-    <div class="floating-square" style="width: 65px; height: 65px; top: 15%; left: 30%; animation: float3 15s infinite;"></div>
-    <div class="floating-square" style="width: 55px; height: 55px; top: 45%; left: 75%; animation: float1 15s infinite;"></div>
-    <div class="button-square" style="top: 65%; left: 15%; animation: float2 15s infinite;">Go</div>
-    <div class="floating-square" style="width: 45px; height: 45px; top: 25%; left: 85%; animation: float3 15s infinite;"></div>
-    <div class="floating-square" style="width: 60px; height: 60px; top: 35%; left: 50%; animation: float1 15s infinite;"></div>
-    <div class="floating-square" style="width: 50px; height: 50px; top: 5%; left: 25%; animation: float2 15s infinite;"></div>
-    <div class="floating-square" style="width: 70px; height: 70px; top: 25%; left: 15%; animation: float3 15s infinite;"></div>
-    <div class="floating-square" style="width: 60px; height: 60px; top: 55%; left: 65%; animation: float1 15s infinite;"></div>
-    <div class="button-square" style="top: 75%; left: 45%; animation: float2 15s infinite;">Now</div>
-    <div class="floating-square" style="width: 40px; height: 40px; top: 10%; left: 60%; animation: float3 15s infinite;"></div>
-    <div class="floating-square" style="width: 65px; height: 65px; top: 30%; left: 80%; animation: float1 15s infinite;"></div>
-    <div class="floating-square" style="width: 55px; height: 55px; top: 40%; left: 10%; animation: float2 15s infinite;"></div>
-    <div class="floating-square" style="width: 75px; height: 75px; top: 60%; left: 30%; animation: float3 15s infinite;"></div>
-    <div class="floating-square" style="width: 45px; height: 45px; top: 20%; left: 90%; animation: float1 15s infinite;"></div>
-    <div class="floating-square" style="width: 60px; height: 60px; top: 70%; left: 70%; animation: float2 15s infinite;"></div>
+  
+  <!-- Particle.js container -->
+  <div id="particles-js"></div>
+
+  <!-- Three.js WebGL Canvas -->
+  <canvas id="three-canvas"></canvas>
+
+  <div class="container">
+    <h1>АЛОЕ ВЕРА ШАМПУНЬ</h1>
+    <p style="font-size:1.25rem; color:#ffffffaa; margin-bottom: 3rem;">Сила природы в каждом флаконе</p>
+    <button class="neon-button" onclick="alert('Покупка оформлена! Спасибо!')">Купить Сейчас</button>
+  </div>
+
+
+  <!-- Initialization Scripts -->
+  <script>
+    //////////////////////
+    // Initialize particles.js
+    //////////////////////
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 120, density: { enable: true, value_area: 800 }},
+        color: { value: ["#00ffff", "#ff0080", "#ffffff"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.6, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+        size: { value: 3, random: true },
+        move: {
+          enable: true,
+          speed: 1.5,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "bounce",
+          bounce: true,
+        }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" },
+        },
+        modes: {
+          grab: { distance: 150, line_linked: { opacity: 0.2 }},
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+
+    //////////////////////
+    // Initialize Three.js - 3 magical floating spheres
+    //////////////////////
+
+    const canvas = document.getElementById("three-canvas");
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);  // Transparent background
+
+    camera.position.set(0, 0, 20);
+
+    // Lights to create glowing effect
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
+    scene.add(ambientLight);
+
+    const pointLight1 = new THREE.PointLight(0x00ffff, 1, 100);
+    pointLight1.position.set(10, 10, 10);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0xff0000, 1, 100);
+    pointLight2.position.set(-10, -10, 10);
+    scene.add(pointLight2);
+
+    const pointLight3 = new THREE.PointLight(0xffffff, 1, 100);
+    pointLight3.position.set(0, 10, 20);
+    scene.add(pointLight3);
+
+    // Sphere parameters
+    const sphereGeometry = new THREE.SphereGeometry(2.2, 64, 64);
+
+    // Materials with neon glow effect using Emissive colors and custom shaders is complex
+    // Here we use MeshBasicMaterial with emissive color and post-processing glow illusion
+    const materialRed = new THREE.MeshStandardMaterial({
+      color: 0xff0040,
+      emissive: 0xff1a4d,
+      roughness: 0.3,
+      metalness: 0.6,
+      transparent: true,
+      opacity: 0.85,
+      side: THREE.DoubleSide,
+    });
+
+    const materialWhite = new THREE.MeshStandardMaterial({
+      color: 0xf0f0f0,
+      emissive: 0xffffff,
+      roughness: 0.3,
+      metalness: 0.8,
+      transparent: true,
+      opacity: 0.8,
+      side: THREE.DoubleSide,
+    });
+
+    const materialBlue = new THREE.MeshStandardMaterial({
+      color: 0x00ffff,
+      emissive: 0x33ffff,
+      roughness: 0.3,
+      metalness: 0.6,
+      transparent: true,
+      opacity: 0.9,
+      side: THREE.DoubleSide,
+    });
+
+    // Create spheres
+    const sphereRed = new THREE.Mesh(sphereGeometry, materialRed);
+    const sphereWhite = new THREE.Mesh(sphereGeometry, materialWhite);
+    const sphereBlue = new THREE.Mesh(sphereGeometry, materialBlue);
+
+    sphereRed.position.set(-6, 0, 0);
+    sphereWhite.position.set(0, 0, 0);
+    sphereBlue.position.set(6, 0, 0);
+
+    scene.add(sphereRed, sphereWhite, sphereBlue);
+
+    // Animation parameters
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      let time = clock.getElapsedTime();
+
+      // Floating / bobbing effect
+      sphereRed.position.y = Math.sin(time * 1.2) * 1.2;
+      sphereWhite.position.y = Math.cos(time * 1.3) * 1.3;
+      sphereBlue.position.y = Math.sin(time * 1.1 + Math.PI/2) * 1.1;
+
+      // Slow rotation for magic effect
+      sphereRed.rotation.y += 0.008;
+      sphereWhite.rotation.y -= 0.0075;
+      sphereBlue.rotation.y += 0.009;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Responsive resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+  </script>
+
 </body>
 </html>
